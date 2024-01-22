@@ -11,7 +11,7 @@ task.use(bodyParser.json());
 task.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 })
-let data = fs.readFileSync('./src/tasks.json');
+let data = fs.readFileSync('./tasks.json');
 
 const allTasks = JSON.parse(data);
 
@@ -29,7 +29,7 @@ task.post('/', (req, res) => {
     }
     console.log(newTask)
     allTasks.push(newTask)
-    fs.writeFile('./src/tasks.json', JSON.stringify(allTasks), (err) => {
+    fs.writeFile('./tasks.json', JSON.stringify(allTasks), (err) => {
         if (err) console.log(`Error writing to file, ${err}`);
         console.log('The file has been saved!');
     });
@@ -42,7 +42,7 @@ task.delete('/:id', (req, res) => {
     const index = allTasks.findIndex(task => task.id === id);
     if (index !== -1)
         allTasks.splice(index, 1)
-    fs.writeFile('./src/tasks.json', JSON.stringify(allTasks), (err) => {
+    fs.writeFile('./tasks.json', JSON.stringify(allTasks), (err) => {
         if (err) throw err;
     });
     res.json(allTasks)
